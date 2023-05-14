@@ -7,6 +7,8 @@ import com.alibaba.excel.metadata.data.WriteCellData;
 import com.alibaba.excel.read.metadata.ReadSheet;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import com.wei.accio.domain.Schedule;
+import com.wei.accio.excel.input.EmployeeRow;
+import com.wei.accio.excel.input.EmployeeRowListener;
 import com.wei.accio.excel.input.ProjectRow;
 import com.wei.accio.excel.input.ProjectRowListener;
 import com.wei.accio.excel.output.ScheduleHeader;
@@ -31,6 +33,7 @@ public class AccioService {
 
         // Read Excel Data
         ProjectRowListener projectRowListener = new ProjectRowListener();
+        EmployeeRowListener employeeRowListener = new EmployeeRowListener();
         try (ExcelReader excelReader = EasyExcel.read(file.getInputStream()).build()) {
 
             // Project
@@ -38,11 +41,13 @@ public class AccioService {
                     EasyExcel.readSheet("專案").head(ProjectRow.class).registerReadListener(projectRowListener).build();
 
             // Employee
+            ReadSheet employeeSheet =
+                    EasyExcel.readSheet("員工").head(EmployeeRow.class).registerReadListener(employeeRowListener).build();
 
             // Special Day
 
             // Read From Excel
-            excelReader.read(projectSheet);
+            excelReader.read(projectSheet, employeeSheet);
         }
 
         // Generate a staffing plan
@@ -55,7 +60,6 @@ public class AccioService {
         result.add(new ScheduleRow("2222", "TEST2"));
 //        ExcelWriter writer = EasyExcel.write(outputStream, ScheduleRow.class).build();
 
-        WriteCellData<>
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
         EasyExcel.write(outputStream, ScheduleRow.class)

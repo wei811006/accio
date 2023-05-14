@@ -1,5 +1,6 @@
 package com.wei.accio.domain;
 
+import com.alibaba.excel.annotation.ExcelProperty;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,13 +13,25 @@ public class Employee {
 
     private String name;
 
+    private String project;
+
     private String level;
 
-    private Integer vacationDays = 0;
+    // Fixed employee holiday schedule
+    private String fixedDayOff;
 
-    private Integer workDays = 0;
+    // Fixed work schedule of employee
+    private String fixedSchedule;
 
-    private Integer continuousWorkingDays = 0;
+    // The number of consecutive working days for the employee
+    private Integer continuously;
+
+    // Employee's day off.
+    private String dayOff;
+
+    private Integer vacationDaysCount = 0;
+
+    private Integer workDaysCount = 0;
 
 
 }

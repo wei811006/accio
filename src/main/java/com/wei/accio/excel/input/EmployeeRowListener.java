@@ -10,19 +10,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-public class ProjectRowListener implements ReadListener<ProjectRow> {
+public class EmployeeRowListener  implements ReadListener<EmployeeRow> {
 
     @Getter
-    private List<ProjectRow> projects = new ArrayList<>();
+    private List<EmployeeRow> employees = new ArrayList<>();
 
     @Override
-    public void invoke(ProjectRow data, AnalysisContext analysisContext) {
-        log.info("Get Project New Row:{}", JSON.toJSONString(data));
-        projects.add(data);
+    public void invoke(EmployeeRow data, AnalysisContext analysisContext) {
+        log.info("Get Employee New Row:{}", JSON.toJSONString(data));
+        employees.add(data);
     }
 
     @Override
     public void doAfterAllAnalysed(AnalysisContext analysisContext) {
-        log.info("Finished reading all Project data.");
+        log.info("Finished reading all Employee data.");
     }
 }
