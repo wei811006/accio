@@ -29,6 +29,15 @@ public class ScheduleHeader {
             header.add(day);
         }
 
+        header.add(List.of("", "休假天數"));
+        header.add(List.of("", "工作天數"));
+        header.add(List.of("", "A班"));
+        header.add(List.of("", "B班"));
+        header.add(List.of("", "C班"));
+        header.add(List.of("", "D班"));
+        header.add(List.of("", "E班"));
+        header.add(List.of("", "F班"));
+
         return header;
     }
 }

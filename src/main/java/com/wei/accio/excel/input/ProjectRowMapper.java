@@ -2,12 +2,13 @@ package com.wei.accio.excel.input;
 
 import com.wei.accio.domain.Project;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
-@Mapper
+import java.util.List;
+
+@Mapper(componentModel = "spring")
 public interface ProjectRowMapper {
 
-    @Mapping(target="employeeId", source="entity.id")
-    Project rowToData(ProjectRow row);
+    Project convert(ProjectRow row);
 
+    List<Project> convert(List<ProjectRow> list);
 }

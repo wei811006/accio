@@ -1,12 +1,13 @@
 package com.wei.accio.domain;
 
 import com.alibaba.excel.annotation.ExcelProperty;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter(value = AccessLevel.PACKAGE)
+import java.util.LinkedList;
+import java.util.List;
+
+@Data
+@EqualsAndHashCode(callSuper = false)
 public class Employee {
 
     private String employeeID;
@@ -26,12 +27,14 @@ public class Employee {
     // The number of consecutive working days for the employee
     private Integer continuously;
 
-    // Employee's day off.
-    private String dayOff;
-
     private Integer vacationDaysCount = 0;
 
     private Integer workDaysCount = 0;
+
+    DayOff isDayOff() {
+        return DayOff.ANNUAL_LEAVE;
+    }
+
 
 
 }
