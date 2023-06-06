@@ -3,6 +3,7 @@ package com.wei.accio;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelReader;
 import com.alibaba.excel.read.metadata.ReadSheet;
+import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
 import com.wei.accio.domain.Schedule;
 import com.wei.accio.excel.input.*;
 import com.wei.accio.excel.output.ScheduleBody;
@@ -49,11 +50,11 @@ public class AccioService {
         ProjectRowMapper projectRowMapper = new ProjectRowMapperImpl();
         EmployeeRowMapper employeeRowMapper = new EmployeeRowMapperImpl();
         SpecialDayRowMapper specialDayRowMapper = new SpecialDayRowMapperImpl();
-        Schedule schedule = new Schedule(
-                employeeRowMapper.convert(employeeRowListener.getEmployees()),
-                projectRowMapper.convert(projectRowListener.getProjects()),
-                specialDayRowMapper.convert(specialDayRowListener.getDays())
-        );
+
+        Schedule schedule = new Schedule();
+        schedule.setSpecialDays(specialDayRowMapper.convert(specialDayRowListener.getDays()));
+        schedule.setProjects(projectRowMapper.convert(projectRowListener.getProjects()));
+        schedule.setEmployees(employeeRowMapper.convert(employeeRowListener.getEmployees()));
 
         // Do staffing plan
         schedule.process(month);
@@ -61,11 +62,10 @@ public class AccioService {
         // Export Excel
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
         EasyExcel.write(outputStream)
+                .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
                 .sheet(sdf.format(new Date()))
-                .head(ScheduleHeader.header(LocalDate.now()))
+                .head(ScheduleHeader.header(month))
                 .doWrite(ScheduleBody.body(schedule.getEmployees()));
     }
-
-
 
 }

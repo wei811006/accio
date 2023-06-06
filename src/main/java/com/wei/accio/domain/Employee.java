@@ -31,10 +31,4 @@ public class Employee {
 
     private Integer workDaysCount = 0;
 
-    DayOff isDayOff() {
-        return DayOff.ANNUAL_LEAVE;
-    }
-
-
-
 }
