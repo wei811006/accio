@@ -3,10 +3,9 @@ package com.wei.accio.domain;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.Instant;
 import java.time.LocalDate;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 public class Schedule {
@@ -25,24 +24,42 @@ public class Schedule {
         LocalDate today = resetToDay1(month);
         LocalDate endOfMonth = today.withDayOfMonth(today.lengthOfMonth()); // 取得本月的最後一天
 
+        // 在此處處理每一天的邏輯
         while (!today.isAfter(endOfMonth)) {
-            // 在此處處理每一天的邏輯
 
             // 當天是否為上班日
             boolean isWorkDay = specialDays.isWork(today);
             log.info("Day: " + today + ", isWorkDay: " + isWorkDay);
 
-            // 取得當日專案需求人力
+            // 取得當日專案人力需求
+            Queue<String> projectRequirements = projects.getProjectRequirements(today, isWorkDay);
 
-            // 處理每位員工
-            Iterator<Employee> iterator = employees.getEmployees().iterator();
-            while (iterator.hasNext()) {
-                Employee targetEmployee = iterator.next();
-                log.info(targetEmployee.getName());
+            // 取得專案所需數量
+            int requiredCount = projects.requiredCount(today, isWorkDay);
 
-                // 判斷員工是否休假
+            // 取得當日可分配員工
+            List<Employee> availableEmployees = employees.getAvailableEmployees(today, requiredCount);
 
+            // 開始分配
+            while(!availableEmployees.isEmpty()) {
 
+                // 依照順序取得專案需求
+                String projectRequirement = projectRequirements.poll();
+
+                // 判斷員工是否符合專案需求
+                Iterator<Employee> iterator = availableEmployees.iterator();
+                while (iterator.hasNext()) {
+                    Employee employee = iterator.next();
+                    if (employee.possesses(projectRequirement.substring(0, projectRequirement.indexOf("-")))) {
+                        log.info(employee.getName() + " has been assigned to " + projectRequirement);
+                        employee.assignWork(projectRequirement);
+                        iterator.remove();
+                        break;
+                    }
+                }
+
+                // 將需求放回順序的最後一個
+                projectRequirements.offer(projectRequirement);
             }
 
             today = today.plusDays(1); // 移至下一天

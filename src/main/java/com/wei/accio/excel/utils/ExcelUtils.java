@@ -2,6 +2,10 @@ package com.wei.accio.excel.utils;
 
 import com.alibaba.excel.metadata.data.FormulaData;
 import com.alibaba.excel.metadata.data.WriteCellData;
+import com.alibaba.excel.write.metadata.style.WriteCellStyle;
+import com.alibaba.excel.write.metadata.style.WriteFont;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 
 public class ExcelUtils {
 

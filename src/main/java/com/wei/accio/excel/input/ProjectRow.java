@@ -14,25 +14,25 @@ public class ProjectRow {
     private String name;
 
     @ExcelProperty("週一")
-    private String monday;
+    private String mondayShift;
 
     @ExcelProperty("週二")
-    private String tuesday;
+    private String tuesdayShift;
 
     @ExcelProperty("週三")
-    private String wednesday;
+    private String wednesdayShift;
 
     @ExcelProperty("週四")
-    private String thursday;
+    private String thursdayShift;
 
     @ExcelProperty("週五")
-    private String friday;
+    private String fridayShift;
 
     @ExcelProperty("週六")
-    private String saturday;
+    private String saturdayShift;
 
     @ExcelProperty("週日")
-    private String sunday;
+    private String sundayShift;
 
 }
 

@@ -1,9 +1,23 @@
 package com.wei.accio.domain;
 
 public enum DayOff {
-    NONE, // 未休假
-    ANNUAL_LEAVE, // 特休
-    MANDATORY_OFF, // 必休
-    ROTATIONAL_OFF, //輪休
 
+    dayOff("特休"),
+    must("必休"),
+    rotate("輪休");
+
+    private final String displayName;
+
+    DayOff(String displayName) {
+        this.displayName = displayName;
+    }
+
+    String getDisplayName() {
+        return displayName;
+    }
+
+    @Override
+    public String toString() {
+        return getDisplayName();
+    }
 }

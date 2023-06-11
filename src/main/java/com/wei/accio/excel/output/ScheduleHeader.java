@@ -1,5 +1,11 @@
 package com.wei.accio.excel.output;
 
+import com.alibaba.excel.write.metadata.style.WriteCellStyle;
+import com.alibaba.excel.write.metadata.style.WriteFont;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -40,4 +46,17 @@ public class ScheduleHeader {
 
         return header;
     }
+
+    public static WriteCellStyle style() {
+        WriteCellStyle headWriteCellStyle = new WriteCellStyle();
+        WriteFont headWriteFont = new WriteFont();
+        headWriteFont.setFontHeightInPoints((short)12);
+        headWriteCellStyle.setWriteFont(headWriteFont);
+
+        headWriteCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+        headWriteCellStyle.setHorizontalAlignment(HorizontalAlignment.CENTER);
+
+        return headWriteCellStyle;
+    }
+
 }

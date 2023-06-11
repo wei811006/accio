@@ -2,7 +2,10 @@ package com.wei.accio;
 
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelReader;
+import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.read.metadata.ReadSheet;
+import com.alibaba.excel.write.metadata.WriteSheet;
+import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
 import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
 import com.wei.accio.domain.Schedule;
 import com.wei.accio.excel.input.*;
@@ -59,13 +62,19 @@ public class AccioService {
         // Do staffing plan
         schedule.process(month);
 
+        // Excel Style
+        HorizontalCellStyleStrategy horizontalCellStyleStrategy =
+                new HorizontalCellStyleStrategy(ScheduleHeader.style(), ScheduleBody.style());
+
         // Export Excel
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
+
         EasyExcel.write(outputStream)
-                .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
+                .registerWriteHandler(horizontalCellStyleStrategy)
                 .sheet(sdf.format(new Date()))
                 .head(ScheduleHeader.header(month))
                 .doWrite(ScheduleBody.body(schedule.getEmployees()));
+
     }
 
 }

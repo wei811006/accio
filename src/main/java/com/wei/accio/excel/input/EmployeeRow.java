@@ -17,7 +17,7 @@ public class EmployeeRow {
     private String name;
 
     @ExcelProperty("分配專案")
-    private String project;
+    private String projectSkill;
 
     @ExcelProperty("一二線")
     private String level;
@@ -33,4 +33,7 @@ public class EmployeeRow {
 
     @ExcelProperty("休假")
     private String dayOff;
+
+    @ExcelProperty("必假")
+    private String mustDayOff;
 }
