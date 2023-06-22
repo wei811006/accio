@@ -5,9 +5,7 @@ import com.alibaba.excel.write.metadata.style.WriteCellStyle;
 import com.alibaba.excel.write.metadata.style.WriteFont;
 import com.wei.accio.domain.Employee;
 import com.wei.accio.excel.utils.ExcelUtils;
-import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 
 import java.util.ArrayList;
@@ -73,6 +71,6 @@ public class ScheduleBody {
             body.add(schedule);
             row++;
         }
-
     }
+
 }

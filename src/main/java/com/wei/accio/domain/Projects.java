@@ -1,5 +1,7 @@
 package com.wei.accio.domain;
 
+import lombok.AccessLevel;
+import lombok.Getter;
 import org.springframework.util.StringUtils;
 
 import java.time.DayOfWeek;
@@ -8,6 +10,7 @@ import java.util.*;
 
 public class Projects {
 
+    @Getter(value = AccessLevel.PACKAGE)
     private List<Project> projects;
 
     Projects(List<Project> projects) {

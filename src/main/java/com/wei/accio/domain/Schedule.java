@@ -31,14 +31,16 @@ public class Schedule {
             boolean isWorkDay = specialDays.isWork(today);
             log.info("Day: " + today + ", isWorkDay: " + isWorkDay);
 
-            // 取得當日專案人力需求
-            Queue<String> projectRequirements = projects.getProjectRequirements(today, isWorkDay);
 
             // 取得專案所需數量
             int requiredCount = projects.requiredCount(today, isWorkDay);
+            log.info("Day: " + today + ", requiredCount: " + requiredCount);
+
+            // 取得每日專案需求
+            Queue<String> projectRequirements = projects.getProjectRequirements(today, isWorkDay);
 
             // 取得當日可分配員工
-            List<Employee> availableEmployees = employees.getAvailableEmployees(today, requiredCount);
+            List<Employee> availableEmployees = employees.getAvailableEmployeesLevel1(today, requiredCount);
 
             // 開始分配
             while(!availableEmployees.isEmpty()) {
@@ -67,6 +69,7 @@ public class Schedule {
 
     }
 
+
     public void setSpecialDays(List<SpecialDay> specialDays) {
         this.specialDays = new SpecialDays(specialDays);
     }
@@ -81,6 +84,10 @@ public class Schedule {
 
     public List<Employee> getEmployees() {
         return this.employees.getEmployees();
+    }
+
+    public List<Project> getProjects() {
+        return this.projects.getProjects();
     }
 
     private LocalDate resetToDay1(LocalDate month) {

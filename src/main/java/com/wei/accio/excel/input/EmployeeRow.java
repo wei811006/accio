@@ -29,7 +29,7 @@ public class EmployeeRow {
     private String fixedSchedule;
 
     @ExcelProperty("已經連續上班")
-    private String continuously;
+    private String continuousWork;
 
     @ExcelProperty("休假")
     private String dayOff;

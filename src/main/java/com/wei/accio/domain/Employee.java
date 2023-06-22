@@ -19,21 +19,28 @@ public class Employee {
 
     private String level;
 
-    // Fixed employee holiday schedule
+    // 固定休假
     private String fixedDayOff;
 
-    // Fixed work schedule of employee
+    // 班別
     private String fixedSchedule;
 
-    // The number of consecutive working days for the employee
-    private Integer continuously;
+    // 連續工作日數量
+    private Integer continuousWork;
 
+    // 連續休假日數量
+    private Integer continuousDayOff = 0;
+
+    // 當月總工作日數量
     private Integer workerDayCount = 0;
 
+    // 特休
     private List<LocalDate> dayOff;
 
+    // 必休
     private List<LocalDate> mustDayOff;
 
+    // 值班
     private List<String> shifts = new ArrayList<>();
 
     /**
@@ -62,32 +69,53 @@ public class Employee {
     private boolean isDayOff(LocalDate date) {
         // 特休
         if (dayOff.contains(date)) {
-            assignDayOff(DayOff.dayOff);
+            assignDayOff();
             return true;
         }
 
         // 必休
         if (mustDayOff.contains(date)) {
-            assignDayOff(DayOff.must);
+            assignDayOffMust();
             return true;
         }
 
         // 避免連續上班
-        if (continuously >= 5) {
-            assignDayOff(DayOff.must);
+        if (continuousWork >= 5) {
+            continuousDayOff = 2;
+            assignDayOffMust();
             return true;
         }
+
+        // 需要連續休假二日
+        if (continuousDayOff > 0) {
+            assignDayOffRotate();
+            return true;
+        }
+
         return false;
     }
 
     void assignWork(String shift) {
-        continuously++;
+        continuousWork++;
         workerDayCount++;
         shifts.add(shift);
     }
 
+    void assignDayOffMust() {
+        assignDayOff(DayOff.must);
+    }
+
+    void assignDayOffRotate() {
+        assignDayOff(DayOff.rotate);
+    }
+
+    void assignDayOff() {
+        assignDayOff(DayOff.dayOff);
+    }
+
     void assignDayOff(DayOff dayOff) {
-        continuously = 0;
+        continuousWork = 0;
+        continuousDayOff--;
         shifts.add(dayOff.getDisplayName());
     }
 
